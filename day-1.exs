@@ -3,7 +3,6 @@ defmodule Day1 do
     File.stream!("inputs/day-1", [:read, :utf8], :line)
     |> Enum.reduce(0, fn line, acc ->
       result = Day1.process_line(line)
-      # IO.inspect(result)
       case  result do
         {nil, nil} -> acc
         {first, nil} -> acc + (first * 10) + first
@@ -23,7 +22,6 @@ defmodule Day1 do
             {_, _} -> {first, char - 48}
           end
         word ->
-          IO.puts(word)
           values = convert_word(word)
           case values do
             [x] ->
@@ -32,7 +30,6 @@ defmodule Day1 do
                 {_, _} -> {first, x}
               end
             [x, y] ->
-              IO.inspect({x, y})
               case {first, last} do
                 {nil, nil} -> {x, y}
                 {_, _} -> {first, y}
@@ -65,33 +62,5 @@ defmodule Day1 do
     end
   end
 end
-
-# pattern = ~r/(?:[1-9]|[one-two-three-four-five-six-seven-eight-nine]+)/
-# matches = Regex.scan(pattern, input_string)
-
-# defmodule Day1 do
-#   def process_line(line) do
-#     String.to_charlist(line)
-#     |> Enum.reduce({nil, nil}, fn char, {first, last} ->
-#       case {first, last} do
-#         {nil, nil} when char >= 48 and char <= 57 -> {char - 48, nil}
-#         {_, _} when char >= 48 and char <= 57 -> {first, char - 48}
-#         {_, _} -> {first, last}
-#       end
-#     end)
-#   end
-
-#   def process() do
-#     File.stream!("inputs/day-1", [:read, :utf8], :line)
-#     |> Enum.reduce(0, fn line, acc ->
-#       case  Day1.process_line(line) do
-#         {nil, nil} -> acc
-#         {first, nil} -> acc + (first * 10) + first
-#         {first, last} -> acc + (first * 10) + last
-#       end
-#     end)
-#     |> IO.puts()
-#   end
-# end
 
 Day1.process()
