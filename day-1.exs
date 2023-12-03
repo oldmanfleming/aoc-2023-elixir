@@ -2,8 +2,7 @@ defmodule Day1 do
   def process() do
     File.stream!("inputs/day-1", [:read, :utf8], :line)
     |> Enum.reduce(0, fn line, acc ->
-      result = Day1.process_line(line)
-      case  result do
+      case  Day1.process_line(line) do
         {nil, nil} -> acc
         {first, nil} -> acc + (first * 10) + first
         {first, last} -> acc + (first * 10) + last
