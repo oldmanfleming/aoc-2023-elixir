@@ -26,10 +26,13 @@ defmodule Day2 do
     [game, info] = String.split(line, ":")
     [_, str_id] = Regex.run(~r/Game (\d+)/, game)
     id = String.to_integer(str_id)
-    results = Regex.scan(~r/(\d+)\s*([a-zA-Z]+)/, info)
-    |> Enum.map(fn [_, str_num, color] ->
-      {color, String.to_integer(str_num)}
-    end)
+
+    results =
+      Regex.scan(~r/(\d+)\s*([a-zA-Z]+)/, info)
+      |> Enum.map(fn [_, str_num, color] ->
+        {color, String.to_integer(str_num)}
+      end)
+
     {id, results}
   end
 
@@ -37,15 +40,18 @@ defmodule Day2 do
     results
     |> Enum.reduce(:possible, fn {color, num}, acc ->
       case acc do
-        :not_possible -> :not_possible
-        :possible -> case color do
-          "red" when num > 12 -> :not_possible
-          "red" -> :possible
-          "green" when num > 13 -> :not_possible
-          "green" -> :possible
-          "blue" when num > 14 -> :not_possible
-          "blue" -> :possible
-        end
+        :not_possible ->
+          :not_possible
+
+        :possible ->
+          case color do
+            "red" when num > 12 -> :not_possible
+            "red" -> :possible
+            "green" when num > 13 -> :not_possible
+            "green" -> :possible
+            "blue" when num > 14 -> :not_possible
+            "blue" -> :possible
+          end
       end
     end)
   end
@@ -56,10 +62,11 @@ defmodule Day2 do
       red = acc["red"]
       green = acc["green"]
       blue = acc["blue"]
+
       case color do
         "red" when num > red -> %{acc | "red" => num}
-        "green" when num > green ->  %{acc | "green" => num}
-        "blue" when num > blue ->  %{acc | "blue" => num}
+        "green" when num > green -> %{acc | "green" => num}
+        "blue" when num > blue -> %{acc | "blue" => num}
         _ -> acc
       end
     end)
